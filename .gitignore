@@ -1,0 +1,40 @@
+# FRONTEND (Vue)
+/frontend/node_modules/        # ← impede subir as dependências do npm
+dist/
+.vite/
+.cache/
+
+# BACKEND (Python)
+.venv/                # ← impede subir o ambiente virtual Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+.env                  # arquivos de ambiente, se usados
+instance/
+
+# PDF temporários e arquivos gerados
+*.pdf
+*.tmp
+*.bak
+
+# LOGS
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# SISTEMA / IDEs
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# pdfkit tmp
+~$temp*
