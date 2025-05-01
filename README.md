@@ -37,7 +37,7 @@ Desenvolvido com foco em usabilidade, acessibilidade e automação inteligente d
 
 ### 1. Clonar o projeto
 ```bash
-git clone https://github.com/seu-usuario/curriculo-plus.git
+git clone https://github.com/adriolivdev/CurriculoPlus.git
 cd curriculo-plus
 ```
 

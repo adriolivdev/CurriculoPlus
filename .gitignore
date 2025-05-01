@@ -1,8 +1,10 @@
 # FRONTEND (Vue)
-/frontend/node_modules/        # ← impede subir as dependências do npm
+node_modules/                 # ← IGNORA o node_modules da raiz
+/frontend/node_modules/       # ← IGNORA também dentro do frontend
 dist/
 .vite/
 .cache/
+
 
 # BACKEND (Python)
 .venv/                # ← impede subir o ambiente virtual Python
