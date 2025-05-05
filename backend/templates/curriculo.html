@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Currículo de {{ dados.nome }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1, h2 {
+      color: #ff6600;
+      margin-bottom: 5px;
+    }
+    h2 {
+      margin-top: 30px;
+    }
+    .info, .section {
+      margin-bottom: 20px;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .tag {
+      display: inline-block;
+      background: #fce4d6;
+      color: #bf360c;
+      padding: 4px 10px;
+      margin: 4px 6px 4px 0;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+    .foto {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  {% if dados.foto %}
+    <img src="{{ dados.foto }}" class="foto" />
+  {% endif %}
+
+  <h1 class="center">{{ dados.nome }}</h1>
+
+  <p class="center">
+    {% if dados.idade %}Idade: {{ dados.idade }}{% endif %}
+    {% if dados.estadoCivil %} • Estado Civil: {{ dados.estadoCivil }}{% endif %}
+  </p>
+  <p class="center">Email: {{ dados.email }}</p>
+
+  {% if dados.objetivo %}
+    <div class="section">
+      <h2>Objetivo</h2>
+      <p>{{ dados.objetivo }}</p>
+    </div>
+  {% endif %}
+
+  {% if dados.formacoes %}
+    <div class="section">
+      <h2>Formação Acadêmica</h2>
+      <ul>
+        {% for f in dados.formacoes %}
+          <li>
+            {{ f.tipo }}
+            {% if f.nomeEscola %} – {{ f.nomeEscola }}{% endif %}
+            {% if f.nomeCurso %} | Curso: {{ f.nomeCurso }}{% endif %}
+            {% if f.inicio or f.fim %} ({{ f.inicio or '?' }} a {{ f.fim or '?' }}){% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if dados.statusExperiencia == 'Em busca do primeiro emprego' %}
+    <div class="section">
+      <h2>Experiência Profissional</h2>
+      <p>Estou em busca da minha primeira oportunidade profissional.</p>
+    </div>
+  {% elif dados.experiencias %}
+    <div class="section">
+      <h2>Experiência Profissional</h2>
+      <ul>
+        {% for e in dados.experiencias %}
+          <li>
+            <strong>{{ e.cargo }}</strong> – {{ e.empresa }} ({{ e.periodo }})<br>
+            <small>{{ e.atividades }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if dados.habilidades %}
+    <div class="section">
+      <h2>Habilidades</h2>
+      {% for h in dados.habilidades %}
+        <span class="tag">{{ h }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if dados.idiomas %}
+    <div class="section">
+      <h2>Idiomas</h2>
+      {% for i in dados.idiomas %}
+        <span class="tag">{{ i }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if dados.cursos %}
+    <div class="section">
+      <h2>Cursos Complementares</h2>
+      {% for c in dados.cursos %}
+        <span class="tag">{{ c }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if dados.disponibilidades %}
+    <div class="section">
+      <h2>Disponibilidade</h2>
+      {% for d in dados.disponibilidades %}
+        <span class="tag">{{ d }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+</body>
+</html>
