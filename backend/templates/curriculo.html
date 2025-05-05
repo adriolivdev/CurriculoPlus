@@ -18,12 +18,11 @@
     }
 
     .foto {
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
       margin: 0 auto 10px auto;
-      display: block;
     }
 
     h1 {
@@ -85,6 +84,7 @@
       </p>
     {% endif %}
     <p>Email: {{ dados.email }}</p>
+    <p>Telefone: {{ dados.telefone }}</p>
   </div>
 
   {% if dados.objetivo %}

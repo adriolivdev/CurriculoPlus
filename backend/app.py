@@ -1,14 +1,14 @@
 from flask import Flask, request, send_file, jsonify, render_template
 import pdfkit
 import tempfile
+import os
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-# Caminho do wkhtmltopdf (ajuste para Render ou ambiente local)
+# Configuração do wkhtmltopdf no ambiente Render (ajuste local se necessário)
 config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
-
 
 @app.route('/')
 def home():
@@ -27,5 +27,7 @@ def gerar_pdf():
     except Exception as e:
         return jsonify({'erro': str(e)}), 500
 
+# 🔥 Esta parte aqui é o que corrige o erro no Render:
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
