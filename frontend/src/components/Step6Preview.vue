@@ -111,7 +111,7 @@ const experienciasValidas = computed(() =>
 
 const gerarPdf = async () => {
   try {
-    const response = await fetch('https://sua-api-render.onrender.com/gerar-pdf', {
+    const response = await fetch('https://curriculoplus.onrender.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(store.$state)
