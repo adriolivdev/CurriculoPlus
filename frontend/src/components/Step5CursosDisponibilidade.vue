@@ -2,23 +2,27 @@
   <form @submit.prevent="$emit('next')" class="space-y-6">
     <h2 class="text-2xl font-semibold text-center text-teal-600">5. Cursos e Disponibilidade</h2>
 
-    <!-- Cursos Complementares -->
+    <!-- Cursos -->
     <div>
       <label class="block font-medium mb-1">Cursos Complementares</label>
       <input
         type="text"
         v-model="novoCurso"
-        @keydown.enter.prevent="confirmarCursoDigitado"
+        @keydown.enter.prevent="adicionarCursoManual"
         placeholder="Digite um curso e pressione Enter"
         class="input"
       />
-      <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
+      <div class="flex flex-wrap gap-2 mt-2">
         <button
           v-for="curso in cursosSugestao"
           :key="curso"
           type="button"
-          @click="adicionarCurso(curso)"
-          class="min-w-max bg-amber-100 text-amber-800 text-sm px-3 py-1 rounded hover:bg-amber-200"
+          :class="{
+            'bg-amber-500 text-white': curriculo.cursos.includes(curso),
+            'bg-amber-100 text-amber-800 hover:bg-amber-200': !curriculo.cursos.includes(curso),
+            'text-sm px-3 py-1 rounded': true
+          }"
+          @click="toggleCurso(curso)"
         >
           {{ curso }}
         </button>
@@ -41,17 +45,21 @@
       <input
         type="text"
         v-model="novaDisponibilidade"
-        @keydown.enter.prevent="confirmarDisponibilidadeDigitada"
+        @keydown.enter.prevent="adicionarDisponibilidadeManual"
         placeholder="Digite uma disponibilidade e pressione Enter"
         class="input"
       />
-      <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
+      <div class="flex flex-wrap gap-2 mt-2">
         <button
           v-for="d in disponibilidadeSugestao"
           :key="d"
           type="button"
-          @click="adicionarDisponibilidade(d)"
-          class="min-w-max bg-indigo-100 text-indigo-800 text-sm px-3 py-1 rounded hover:bg-indigo-200"
+          :class="{
+            'bg-indigo-600 text-white': curriculo.disponibilidades.includes(d),
+            'bg-indigo-100 text-indigo-800 hover:bg-indigo-200': !curriculo.disponibilidades.includes(d),
+            'text-sm px-3 py-1 rounded': true
+          }"
+          @click="toggleDisponibilidade(d)"
         >
           {{ d }}
         </button>
@@ -93,14 +101,8 @@ const disponibilidadeSugestao = [
   'Integral', 'Manhã', 'Tarde', 'Noite', 'Fins de semana', 'Imediata', 'Sábados', 'Domingos'
 ]
 
-const adicionarCurso = (c) => {
-  const valor = c.trim()
-  if (valor && !curriculo.cursos.includes(valor)) {
-    curriculo.cursos.push(valor)
-  }
-}
-
-const confirmarCursoDigitado = () => {
+// Cursos
+const adicionarCursoManual = () => {
   const valor = novoCurso.value.trim()
   if (valor && !curriculo.cursos.includes(valor)) {
     curriculo.cursos.push(valor)
@@ -108,23 +110,35 @@ const confirmarCursoDigitado = () => {
   novoCurso.value = ''
 }
 
+const toggleCurso = (curso) => {
+  const index = curriculo.cursos.indexOf(curso)
+  if (index >= 0) {
+    curriculo.cursos.splice(index, 1)
+  } else {
+    curriculo.cursos.push(curso)
+  }
+}
+
 const removerCurso = (index) => {
   curriculo.cursos.splice(index, 1)
 }
 
-const adicionarDisponibilidade = (d) => {
-  const valor = d.trim()
-  if (valor && !curriculo.disponibilidades.includes(valor)) {
-    curriculo.disponibilidades.push(valor)
-  }
-}
-
-const confirmarDisponibilidadeDigitada = () => {
+// Disponibilidade
+const adicionarDisponibilidadeManual = () => {
   const valor = novaDisponibilidade.value.trim()
   if (valor && !curriculo.disponibilidades.includes(valor)) {
     curriculo.disponibilidades.push(valor)
   }
   novaDisponibilidade.value = ''
+}
+
+const toggleDisponibilidade = (d) => {
+  const index = curriculo.disponibilidades.indexOf(d)
+  if (index >= 0) {
+    curriculo.disponibilidades.splice(index, 1)
+  } else {
+    curriculo.disponibilidades.push(d)
+  }
 }
 
 const removerDisponibilidade = (index) => {

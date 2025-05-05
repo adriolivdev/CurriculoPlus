@@ -8,17 +8,21 @@
       <input
         type="text"
         v-model="novaHabilidade"
-        @keydown.enter.prevent="confirmarHabilidadeDigitada"
+        @keydown.enter.prevent="adicionarHabilidadeManual"
         placeholder="Digite uma habilidade e pressione Enter"
         class="input"
       />
-      <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
+      <div class="flex flex-wrap gap-2 mt-2">
         <button
-          v-for="(h, idx) in habilidadesSugestao"
-          :key="'h' + idx"
+          v-for="h in habilidadesSugestao"
+          :key="h"
           type="button"
-          @click="adicionarHabilidade(h)"
-          class="min-w-max bg-teal-100 text-teal-800 text-sm px-3 py-1 rounded hover:bg-teal-200"
+          :class="{
+            'bg-teal-600 text-white': curriculo.habilidades.includes(h),
+            'bg-teal-100 text-teal-800 hover:bg-teal-200': !curriculo.habilidades.includes(h),
+            'text-sm px-3 py-1 rounded': true
+          }"
+          @click="toggleHabilidade(h)"
         >
           {{ h }}
         </button>
@@ -41,17 +45,21 @@
       <input
         type="text"
         v-model="novoIdioma"
-        @keydown.enter.prevent="confirmarIdiomaDigitado"
+        @keydown.enter.prevent="adicionarIdiomaManual"
         placeholder="Digite um idioma e pressione Enter"
         class="input"
       />
-      <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
+      <div class="flex flex-wrap gap-2 mt-2">
         <button
-          v-for="(i, idx) in idiomasSugestao"
-          :key="'i' + idx"
+          v-for="i in idiomasSugestao"
+          :key="i"
           type="button"
-          @click="adicionarIdioma(i)"
-          class="min-w-max bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded hover:bg-blue-200"
+          :class="{
+            'bg-blue-600 text-white': curriculo.idiomas.includes(i),
+            'bg-blue-100 text-blue-800 hover:bg-blue-200': !curriculo.idiomas.includes(i),
+            'text-sm px-3 py-1 rounded': true
+          }"
+          @click="toggleIdioma(i)"
         >
           {{ i }}
         </button>
@@ -95,29 +103,21 @@ const idiomasSugestao = [
   'Espanhol Básico', 'Francês Básico', 'Italiano Básico', 'Alemão Básico'
 ]
 
-let enterDigitadoHabilidade = false
-let enterDigitadoIdioma = false
-
-const confirmarHabilidadeDigitada = () => {
-  enterDigitadoHabilidade = true
-  setTimeout(() => {
-    if (enterDigitadoHabilidade) {
-      const valor = novaHabilidade.value.trim()
-      if (valor && !curriculo.habilidades.includes(valor)) {
-        curriculo.habilidades.push(valor)
-      }
-      novaHabilidade.value = ''
-      enterDigitadoHabilidade = false
-    }
-  }, 0)
+// Habilidades
+const adicionarHabilidadeManual = () => {
+  const valor = novaHabilidade.value.trim()
+  if (valor && !curriculo.habilidades.includes(valor)) {
+    curriculo.habilidades.push(valor)
+  }
+  novaHabilidade.value = ''
 }
 
-const adicionarHabilidade = (h) => {
-  if (!enterDigitadoHabilidade) {
-    const valor = h.trim()
-    if (valor && !curriculo.habilidades.includes(valor)) {
-      curriculo.habilidades.push(valor)
-    }
+const toggleHabilidade = (h) => {
+  const index = curriculo.habilidades.indexOf(h)
+  if (index >= 0) {
+    curriculo.habilidades.splice(index, 1)
+  } else {
+    curriculo.habilidades.push(h)
   }
 }
 
@@ -125,26 +125,21 @@ const removerHabilidade = (index) => {
   curriculo.habilidades.splice(index, 1)
 }
 
-const confirmarIdiomaDigitado = () => {
-  enterDigitadoIdioma = true
-  setTimeout(() => {
-    if (enterDigitadoIdioma) {
-      const valor = novoIdioma.value.trim()
-      if (valor && !curriculo.idiomas.includes(valor)) {
-        curriculo.idiomas.push(valor)
-      }
-      novoIdioma.value = ''
-      enterDigitadoIdioma = false
-    }
-  }, 0)
+// Idiomas
+const adicionarIdiomaManual = () => {
+  const valor = novoIdioma.value.trim()
+  if (valor && !curriculo.idiomas.includes(valor)) {
+    curriculo.idiomas.push(valor)
+  }
+  novoIdioma.value = ''
 }
 
-const adicionarIdioma = (i) => {
-  if (!enterDigitadoIdioma) {
-    const valor = i.trim()
-    if (valor && !curriculo.idiomas.includes(valor)) {
-      curriculo.idiomas.push(valor)
-    }
+const toggleIdioma = (i) => {
+  const index = curriculo.idiomas.indexOf(i)
+  if (index >= 0) {
+    curriculo.idiomas.splice(index, 1)
+  } else {
+    curriculo.idiomas.push(i)
   }
 }
 
