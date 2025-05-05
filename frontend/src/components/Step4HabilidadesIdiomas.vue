@@ -12,13 +12,13 @@
         placeholder="Digite uma habilidade e pressione Enter"
         class="input"
       />
-      <div class="flex flex-wrap gap-2 mt-2">
+      <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
         <button
-          v-for="h in habilidadesSugestao"
-          :key="h"
+          v-for="(h, idx) in habilidadesSugestao"
+          :key="'h' + idx"
           type="button"
           @click="adicionarHabilidade(h)"
-          class="bg-teal-100 text-teal-800 text-sm px-3 py-1 rounded hover:bg-teal-200"
+          class="min-w-max bg-teal-100 text-teal-800 text-sm px-3 py-1 rounded hover:bg-teal-200"
         >
           {{ h }}
         </button>
@@ -45,13 +45,13 @@
         placeholder="Digite um idioma e pressione Enter"
         class="input"
       />
-      <div class="flex flex-wrap gap-2 mt-2">
+      <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
         <button
-          v-for="i in idiomasSugestao"
-          :key="i"
+          v-for="(i, idx) in idiomasSugestao"
+          :key="'i' + idx"
           type="button"
           @click="adicionarIdioma(i)"
-          class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded hover:bg-blue-200"
+          class="min-w-max bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded hover:bg-blue-200"
         >
           {{ i }}
         </button>
@@ -95,39 +95,57 @@ const idiomasSugestao = [
   'Espanhol Básico', 'Francês Básico', 'Italiano Básico', 'Alemão Básico'
 ]
 
-// Ao clicar nos botões de sugestão
-const adicionarHabilidade = (h) => {
-  const valor = h.trim()
-  if (valor && !curriculo.habilidades.includes(valor)) {
-    curriculo.habilidades.push(valor)
-  }
-}
+let enterDigitadoHabilidade = false
+let enterDigitadoIdioma = false
 
 const confirmarHabilidadeDigitada = () => {
-  const valor = novaHabilidade.value.trim()
-  if (valor && !curriculo.habilidades.includes(valor)) {
-    curriculo.habilidades.push(valor)
+  enterDigitadoHabilidade = true
+  setTimeout(() => {
+    if (enterDigitadoHabilidade) {
+      const valor = novaHabilidade.value.trim()
+      if (valor && !curriculo.habilidades.includes(valor)) {
+        curriculo.habilidades.push(valor)
+      }
+      novaHabilidade.value = ''
+      enterDigitadoHabilidade = false
+    }
+  }, 0)
+}
+
+const adicionarHabilidade = (h) => {
+  if (!enterDigitadoHabilidade) {
+    const valor = h.trim()
+    if (valor && !curriculo.habilidades.includes(valor)) {
+      curriculo.habilidades.push(valor)
+    }
   }
-  novaHabilidade.value = ''
 }
 
 const removerHabilidade = (index) => {
   curriculo.habilidades.splice(index, 1)
 }
 
-const adicionarIdioma = (i) => {
-  const valor = i.trim()
-  if (valor && !curriculo.idiomas.includes(valor)) {
-    curriculo.idiomas.push(valor)
-  }
+const confirmarIdiomaDigitado = () => {
+  enterDigitadoIdioma = true
+  setTimeout(() => {
+    if (enterDigitadoIdioma) {
+      const valor = novoIdioma.value.trim()
+      if (valor && !curriculo.idiomas.includes(valor)) {
+        curriculo.idiomas.push(valor)
+      }
+      novoIdioma.value = ''
+      enterDigitadoIdioma = false
+    }
+  }, 0)
 }
 
-const confirmarIdiomaDigitado = () => {
-  const valor = novoIdioma.value.trim()
-  if (valor && !curriculo.idiomas.includes(valor)) {
-    curriculo.idiomas.push(valor)
+const adicionarIdioma = (i) => {
+  if (!enterDigitadoIdioma) {
+    const valor = i.trim()
+    if (valor && !curriculo.idiomas.includes(valor)) {
+      curriculo.idiomas.push(valor)
+    }
   }
-  novoIdioma.value = ''
 }
 
 const removerIdioma = (index) => {
