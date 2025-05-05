@@ -8,7 +8,7 @@
       <input
         type="text"
         v-model="novaHabilidade"
-        @keyup.enter.prevent="adicionarHabilidadeDigitada"
+        @keydown.enter.prevent="confirmarHabilidadeDigitada"
         placeholder="Digite uma habilidade e pressione Enter"
         class="input"
       />
@@ -16,7 +16,8 @@
         <button
           v-for="h in habilidadesSugestao"
           :key="h"
-          @click.prevent="adicionarHabilidade(h)"
+          type="button"
+          @click="adicionarHabilidade(h)"
           class="bg-teal-100 text-teal-800 text-sm px-3 py-1 rounded hover:bg-teal-200"
         >
           {{ h }}
@@ -40,7 +41,7 @@
       <input
         type="text"
         v-model="novoIdioma"
-        @keyup.enter.prevent="adicionarIdiomaDigitado"
+        @keydown.enter.prevent="confirmarIdiomaDigitado"
         placeholder="Digite um idioma e pressione Enter"
         class="input"
       />
@@ -48,7 +49,8 @@
         <button
           v-for="i in idiomasSugestao"
           :key="i"
-          @click.prevent="adicionarIdioma(i)"
+          type="button"
+          @click="adicionarIdioma(i)"
           class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded hover:bg-blue-200"
         >
           {{ i }}
@@ -93,7 +95,7 @@ const idiomasSugestao = [
   'Espanhol Básico', 'Francês Básico', 'Italiano Básico', 'Alemão Básico'
 ]
 
-// Clique em botão sugestão
+// Ao clicar nos botões de sugestão
 const adicionarHabilidade = (h) => {
   const valor = h.trim()
   if (valor && !curriculo.habilidades.includes(valor)) {
@@ -101,8 +103,7 @@ const adicionarHabilidade = (h) => {
   }
 }
 
-// Enter digitando
-const adicionarHabilidadeDigitada = () => {
+const confirmarHabilidadeDigitada = () => {
   const valor = novaHabilidade.value.trim()
   if (valor && !curriculo.habilidades.includes(valor)) {
     curriculo.habilidades.push(valor)
@@ -114,7 +115,6 @@ const removerHabilidade = (index) => {
   curriculo.habilidades.splice(index, 1)
 }
 
-// Clique em botão sugestão
 const adicionarIdioma = (i) => {
   const valor = i.trim()
   if (valor && !curriculo.idiomas.includes(valor)) {
@@ -122,8 +122,7 @@ const adicionarIdioma = (i) => {
   }
 }
 
-// Enter digitando
-const adicionarIdiomaDigitado = () => {
+const confirmarIdiomaDigitado = () => {
   const valor = novoIdioma.value.trim()
   if (valor && !curriculo.idiomas.includes(valor)) {
     curriculo.idiomas.push(valor)
