@@ -7,7 +7,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 
 # Habilita o CORS para aceitar requisições do frontend (como Vercel, por exemplo)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "https://curriculo-plus.vercel.app"}})
 
 # Configura o caminho para o executável do wkhtmltopdf (ajuste esse caminho conforme o ambiente: Render ou local)
 config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
