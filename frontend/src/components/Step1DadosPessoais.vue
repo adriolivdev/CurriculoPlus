@@ -14,16 +14,22 @@
       <input type="email" v-model="email" class="input" placeholder="Ex: voce@email.com" required />
     </div>
 
+    <!-- Telefone -->
+    <div>
+      <label class="block font-medium">Telefone</label>
+      <input type="tel" v-model="telefone" class="input" placeholder="Ex: (99) 99999-9999" required />
+    </div>
+
     <!-- Idade -->
     <div>
       <label class="block font-medium">Idade</label>
-      <input type="number" v-model="idade" class="input" placeholder="Ex: 25" />
+      <input type="number" v-model="idade" class="input" placeholder="Ex: 25" required />
     </div>
 
     <!-- Estado civil -->
     <div>
       <label class="block font-medium">Estado civil</label>
-      <select v-model="estadoCivil" class="input">
+      <select v-model="estadoCivil" class="input" required>
         <option disabled value="">Selecione</option>
         <option>Solteiro(a)</option>
         <option>Casado(a)</option>
@@ -41,6 +47,7 @@
       </div>
     </div>
 
+    <!-- Próximo -->
     <div class="flex justify-end">
       <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white py-2 px-6 rounded-md font-semibold">
         Próximo
@@ -63,6 +70,10 @@ const email = computed({
   get: () => store.email,
   set: val => (store.email = val)
 })
+const telefone = computed({
+  get: () => store.telefone,
+  set: val => (store.telefone = val)
+})
 const idade = computed({
   get: () => store.idade,
   set: val => (store.idade = val)
@@ -76,7 +87,6 @@ const foto = computed({
   set: val => (store.foto = val)
 })
 
-// Converte a imagem para base64
 const handleFoto = (e) => {
   const file = e.target.files[0]
   if (!file) return
