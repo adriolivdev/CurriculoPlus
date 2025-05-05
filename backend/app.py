@@ -7,9 +7,8 @@ app = Flask(__name__)
 CORS(app)
 
 # Caminho do wkhtmltopdf (ajuste para Render ou ambiente local)
-config = pdfkit.configuration(
-    wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-)
+config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+
 
 @app.route('/')
 def home():
