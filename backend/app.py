@@ -1,13 +1,12 @@
 from flask import Flask, request, send_file, jsonify, render_template
 import pdfkit
 import tempfile
-import os
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-# Configuração do wkhtmltopdf no ambiente Render (ajuste local se necessário)
+# Caminho para o wkhtmltopdf (ajuste para seu ambiente local ou Render)
 config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
 
 @app.route('/')
@@ -18,16 +17,22 @@ def home():
 def gerar_pdf():
     try:
         dados = request.get_json()
+
+        # Renderiza o HTML com os dados recebidos
         html = render_template("curriculo.html", dados=dados)
 
+        # Cria PDF temporário
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as f:
             pdfkit.from_string(html, f.name, configuration=config)
-            return send_file(f.name, as_attachment=True, download_name="curriculo.pdf")
+
+            # Formata nome do arquivo com base no nome da pessoa
+            nome_formatado = dados.get("nome", "curriculo").strip().replace(" ", "-")
+            nome_pdf = f"curriculo-{nome_formatado}.pdf"
+
+            return send_file(f.name, as_attachment=True, download_name=nome_pdf)
 
     except Exception as e:
         return jsonify({'erro': str(e)}), 500
 
-# 🔥 Esta parte aqui é o que corrige o erro no Render:
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
