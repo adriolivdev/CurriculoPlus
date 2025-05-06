@@ -12,13 +12,13 @@
     <!-- Nome -->
     <div>
       <label class="block font-medium">Nome completo</label>
-      <input type="text" v-model="nome" class="input" placeholder="Ex: Adriane Oliveira" required />
+      <input type="text" v-model="nome" class="input" placeholder="Ex: João da Silva Costa" required />
     </div>
 
     <!-- Email -->
     <div>
       <label class="block font-medium">Email</label>
-      <input type="email" v-model="email" class="input" placeholder="Ex: voce@email.com" required />
+      <input type="email" v-model="email" class="input" placeholder="Ex: seuemail@email.com" required />
     </div>
 
     <!-- Telefone -->
