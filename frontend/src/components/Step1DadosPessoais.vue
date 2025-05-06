@@ -1,6 +1,13 @@
 <template>
   <form @submit.prevent="$emit('next')" class="space-y-4">
-    <h2 class="text-2xl font-semibold text-center text-teal-600">1. Dados Pessoais</h2>
+    <!-- Cabeçalho e explicação -->
+    <div class="text-center space-y-2 mb-4">
+      <h2 class="text-2xl font-bold text-teal-600">🚀 Gerador de Currículos Inteligente</h2>
+      <p class="text-gray-700 text-sm">
+        Preencha seus dados passo a passo. Ao final, você poderá <strong>visualizar, revisar e baixar</strong> seu currículo em PDF com um clique!
+      </p>
+      <p class="text-gray-600 text-xs italic">Etapa 1 de 6: Informações pessoais</p>
+    </div>
 
     <!-- Nome -->
     <div>
@@ -47,8 +54,8 @@
       </div>
     </div>
 
-    <!-- Próximo -->
-    <div class="flex justify-end">
+    <!-- Botão de próximo -->
+    <div class="flex justify-end mt-4">
       <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white py-2 px-6 rounded-md font-semibold">
         Próximo
       </button>

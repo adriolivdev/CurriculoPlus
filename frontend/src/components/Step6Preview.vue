@@ -85,6 +85,16 @@
       </div>
     </div>
 
+    <!-- Feedback -->
+    <div class="text-center text-sm">
+      <div v-if="carregando" class="text-gray-500 animate-pulse mt-2">
+        ⏳ Carregando currículo...
+      </div>
+      <div v-if="sucesso && !carregando" class="text-green-600 font-semibold mt-2 animate-fade">
+        ✅ Currículo gerado com sucesso!
+      </div>
+    </div>
+
     <!-- Botões -->
     <div class="flex justify-between mt-4">
       <button @click="$emit('voltar')" class="text-gray-600 hover:underline">Voltar e Editar</button>
@@ -96,23 +106,29 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useCurriculoStore } from '../stores/curriculo'
 
 const store = useCurriculoStore()
 
-// Filtra formações válidas
+// Estados de feedback
+const carregando = ref(false)
+const sucesso = ref(false)
+
+// Computeds para validação
 const formacoesValidas = computed(() =>
   store.formacoes.filter(f => f.tipo)
 )
 
-// Filtra experiências válidas
 const experienciasValidas = computed(() =>
   store.experiencias.filter(e => e.empresa && e.cargo && e.periodo)
 )
 
-// Gera e baixa o PDF chamando o backend
+// Gera e baixa o PDF
 const gerarPdf = async () => {
+  carregando.value = true
+  sucesso.value = false
+
   try {
     const response = await fetch('https://curriculoplus.onrender.com/gerar-pdf', {
       method: 'POST',
@@ -131,9 +147,13 @@ const gerarPdf = async () => {
     a.click()
     a.remove()
     window.URL.revokeObjectURL(url)
+
+    sucesso.value = true
   } catch (error) {
     console.error('Erro ao gerar PDF:', error)
     alert('Erro ao gerar PDF. Verifique sua conexão com o servidor.')
+  } finally {
+    carregando.value = false
   }
 }
 </script>
@@ -141,5 +161,20 @@ const gerarPdf = async () => {
 <style scoped>
 .tag {
   @apply text-white px-3 py-1 rounded-full text-sm bg-teal-600;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade {
+  animation: fadeIn 0.7s ease-out;
 }
 </style>
