@@ -86,8 +86,8 @@
     </div>
 
     <!-- Botões -->
-    <div class="flex justify-between">
-      <button @click="$emit('voltar')" class="text-gray-600">Voltar e Editar</button>
+    <div class="flex justify-between mt-4">
+      <button @click="$emit('voltar')" class="text-gray-600 hover:underline">Voltar e Editar</button>
       <button @click="gerarPdf" class="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-md font-semibold">
         Baixar PDF
       </button>
@@ -101,32 +101,39 @@ import { useCurriculoStore } from '../stores/curriculo'
 
 const store = useCurriculoStore()
 
+// Filtra formações válidas
 const formacoesValidas = computed(() =>
   store.formacoes.filter(f => f.tipo)
 )
 
+// Filtra experiências válidas
 const experienciasValidas = computed(() =>
   store.experiencias.filter(e => e.empresa && e.cargo && e.periodo)
 )
 
+// Gera e baixa o PDF chamando o backend
 const gerarPdf = async () => {
   try {
-    const response = await fetch('https://curriculoplus.onrender.com', {
+    const response = await fetch('https://curriculoplus.onrender.com/gerar-pdf', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(store.$state)
     })
 
+    if (!response.ok) throw new Error('Erro ao gerar PDF')
+
     const blob = await response.blob()
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'curriculo.pdf'
+    a.download = `curriculo-${store.nome?.replace(/\s+/g, '-') || 'documento'}.pdf`
+    document.body.appendChild(a)
     a.click()
+    a.remove()
     window.URL.revokeObjectURL(url)
   } catch (error) {
     console.error('Erro ao gerar PDF:', error)
-    alert('Erro ao gerar PDF. Verifique o backend.')
+    alert('Erro ao gerar PDF. Verifique sua conexão com o servidor.')
   }
 }
 </script>
