@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Currículo de {{ dados.nome }}</title>
+  <title>Currículo de {{ dados.nome or '' }}</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,14 +15,6 @@
     .topo {
       text-align: center;
       margin-bottom: 30px;
-    }
-
-    .foto {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin: 0 auto 10px;
     }
 
     h1 {
@@ -72,10 +64,7 @@
 <body>
 
   <div class="topo">
-    {% if dados.foto %}
-      <img src="{{ dados.foto }}" class="foto" />
-    {% endif %}
-    <h1>{{ dados.nome }}</h1>
+    <h1>{{ dados.nome or '' }}</h1>
     {% if dados.idade or dados.estadoCivil %}
       <p>
         {% if dados.idade %}Idade: {{ dados.idade }}{% endif %}
@@ -83,8 +72,8 @@
         {% if dados.estadoCivil %}Estado Civil: {{ dados.estadoCivil }}{% endif %}
       </p>
     {% endif %}
-    <p>Email: {{ dados.email }}</p>
-    <p>Telefone: {{ dados.telefone }}</p>
+    <p>Email: {{ dados.email or '' }}</p>
+    <p>Telefone: {{ dados.telefone or '' }}</p>
   </div>
 
   {% if dados.objetivo %}
@@ -100,7 +89,7 @@
       <ul>
         {% for f in dados.formacoes %}
           <li>
-            {{ f.tipo }}
+            {{ f.tipo or '' }}
             {% if f.nomeEscola %} – {{ f.nomeEscola }}{% endif %}
             {% if f.nomeCurso %} | Curso: {{ f.nomeCurso }}{% endif %}
             {% if f.inicio or f.fim %} ({{ f.inicio or '?' }} a {{ f.fim or '?' }}){% endif %}
@@ -121,8 +110,8 @@
       <ul>
         {% for e in dados.experiencias %}
           <li>
-            <strong>{{ e.cargo }}</strong> – {{ e.empresa }} ({{ e.periodo }})<br>
-            <small>{{ e.atividades }}</small>
+            <strong>{{ e.cargo or '' }}</strong> – {{ e.empresa or '' }} ({{ e.periodo or '' }})<br>
+            <small>{{ e.atividades or '' }}</small>
           </li>
         {% endfor %}
       </ul>
