@@ -131,15 +131,19 @@ const gerarPdf = async () => {
   sucesso.value = false
 
   try {
+    console.log('Enviando dados para o servidor:', store.$state)
     const response = await fetch('https://curriculoplus.onrender.com/gerar-pdf', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(store.$state)
     })
 
+    console.log('Resposta do servidor:', response)
     if (!response.ok) throw new Error('Erro ao gerar PDF')
 
     const blob = await response.blob()
+    console.log('Blob recebido:', blob)
+
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
