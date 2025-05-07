@@ -14,6 +14,7 @@
         <span v-if="store.idade">Idade: {{ store.idade }}</span>
         <span v-if="store.estadoCivil"> • Estado Civil: {{ store.estadoCivil }}</span><br />
         Email: {{ store.email }}<br />
+        <span v-if="store.endereco">Endereço: {{ store.endereco }}</span><br />
         <span v-if="store.telefone">Telefone: {{ store.telefone }}</span>
       </p>
 
