@@ -4,6 +4,8 @@ export const useCurriculoStore = defineStore('curriculo', {
   state: () => ({
     nome: '',
     email: '',
+    endereco: '',
+    telefone: '',
     idade: '',
     estadoCivil: '',
     foto: null,

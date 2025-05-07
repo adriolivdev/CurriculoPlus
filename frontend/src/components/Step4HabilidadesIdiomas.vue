@@ -9,7 +9,7 @@
         type="text"
         v-model="novaHabilidade"
         @keydown.enter.prevent="adicionarHabilidadeManual"
-        placeholder="Selecione ou Digite um idioma e pressione Enter"
+        placeholder="Selecione ou Digite uma Habilidade e pressione Enter"
         class="input"
       />
       <div class="flex flex-wrap gap-2 mt-2">

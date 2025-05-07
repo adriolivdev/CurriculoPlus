@@ -9,7 +9,7 @@
         type="text"
         v-model="novoCurso"
         @keydown.enter.prevent="adicionarCursoManual"
-        placeholder="Selecione ou Digite um idioma e pressione Enter"
+        placeholder="Selecione ou Digite um Curso e pressione Enter"
         class="input"
       />
       <div class="flex flex-wrap gap-2 mt-2">
@@ -46,7 +46,7 @@
         type="text"
         v-model="novaDisponibilidade"
         @keydown.enter.prevent="adicionarDisponibilidadeManual"
-        placeholder="Selecione ou Digite um idioma e pressione Enter"
+        placeholder="Selecione ou Digite a Disponibilidade e pressione Enter"
         class="input"
       />
       <div class="flex flex-wrap gap-2 mt-2">

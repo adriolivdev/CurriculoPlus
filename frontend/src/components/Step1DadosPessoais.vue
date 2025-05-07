@@ -21,6 +21,12 @@
       <input type="email" v-model="email" class="input" placeholder="Ex: seuemail@email.com" required />
     </div>
 
+    <!--Endereço-->
+    <div>
+      <label class="block font-medium">Endereço</label>
+      <input type="text" v-model="endereco" class="input" placeholder="Ex: Rua das Flores, 123" required />
+    </div>
+
     <!-- Telefone -->
     <div>
       <label class="block font-medium">Telefone</label>
@@ -76,6 +82,11 @@ const nome = computed({
 const email = computed({
   get: () => store.email,
   set: val => (store.email = val)
+})
+
+const endereco = computed({
+  get: () => store.endereco,
+  set: val => (store.endereco = val)
 })
 const telefone = computed({
   get: () => store.telefone,
